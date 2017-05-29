@@ -1,6 +1,8 @@
 .gradle
 .idea
 *.iml
-web\build\*
-web\node_modules\*
-web\vendor\*
+out
+build
+web/build
+web/vendor
+web/node_modules
