@@ -1,0 +1,183 @@
+<loading/>
+
+<md-sidenav class="md-sidenav-left md-sidenav-lg" md-component-id="left"
+            md-disable-backdrop md-whiteframe="4">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Параметры поиска</h1>
+    </md-toolbar>
+    <md-content layout-margin>
+        <p>
+            Укажите критерий для построения отчета
+        </p>
+        <div layout="row">
+            <div flex="100">
+                <md-input-container class="form-group md-input-container-margin md-block">
+                    <label>Смена</label>
+                    <md-select name="criteria.smena" ng-model="criteria.smena" md-placeholder="Смена">
+                        <md-option value="Смена 1">1 Смена</md-option>
+                        <md-option value="Смена 2">2 Смена</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+        <div class="row">
+            <label>Дата с</label>
+            <md-datepicker ng-model="criteria.startDate" md-placeholder="Дата с"></md-datepicker>
+            <label class="padding-12 _left">по</label>
+            <md-datepicker ng-model="criteria.endDate" md-placeholder="Дата по"></md-datepicker>
+        </div>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Гос. номер</label>
+            <md-select name="criteria.carNom" ng-model="criteria.carNom" data-md-container-class="selectHeader" multiple>
+                <md-select-header class="select-header">
+                    <input ng-model="carNum"
+                           type="text"
+                           placeholder="Введите гос. номер (минимум 3 символа)"
+                           class="header-searchbox md-text"
+                           ng-change="changeInput()">
+                </md-select-header>
+                <md-optgroup label="гос номера">
+                    <md-option ng-value="car.name" ng-repeat="car in cars | filter:carNum">{{car.name}}</md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Погрузка</label>
+            <md-select name="criteria.loading" ng-model="criteria.loading">
+                <md-option ng-value="loading.name" ng-repeat="loading in loadings">{{loading.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Разгрузка</label>
+            <md-select name="criteria.unloading" ng-model="criteria.unloading">
+                <md-option ng-value="unloading.name" ng-repeat="unloading in unloadings">{{unloading.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Вид груза</label>
+            <md-select name="criteria.cargo" ng-model="criteria.cargo" multiple>
+                <md-option ng-value="cargo.name" ng-repeat="cargo in cargos">{{cargo.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Грузоперевозчик</label>
+            <md-select name="criteria.cargoCarrier" ng-model="criteria.cargoCarrier">
+                <md-option ng-value="cargoCarrier.name" ng-repeat="cargoCarrier in cargoCarriers">{{cargoCarrier.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Грузоотправитель</label>
+            <md-select name="criteria.sender" ng-model="criteria.sender">
+                <md-option ng-value="sender.name" ng-repeat="sender in senders">{{sender.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="form-group md-input-container-margin md-block">
+            <label>Грузополучатель</label>
+            <md-select name="criteria.addressee" ng-model="criteria.addressee">
+                <md-option ng-value="addressee.name" ng-repeat="addressee in addressees">{{addressee.name}}</md-option>
+            </md-select>
+        </md-input-container>
+
+
+        <div class="row pull-right">
+            <md-button ng-click="toggleLeft()" class="md-accent"> Закрыть </md-button>
+            <md-button ng-click="clearSearch()" class="md-primary md-hue-1"> Отчистить блок поиска </md-button>
+            <md-button class="md-raised md-primary" ng-click="search()">Поиск...</md-button>
+        </div>
+    </md-content>
+</md-sidenav>
+
+<div>
+    <md-button ng-click="toggleLeft()" class="md-raised md-primary">
+        Открыть критерий поиска
+    </md-button>
+
+   <a target="_blank" ng-click="preViewPrint()">
+       <!--<md-button md-no-ink class="md-primary">-->
+        Версия для печати
+       <!--</md-button>-->
+   </a>
+</div>
+
+<div class="container-fluid" ng-if="weights.length > 0">
+    <div>
+        <table class="table table-hover table-striped margin-0 _full">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Гос. номер</th>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Вид груза</th>
+                    <th colspan="3" class="col-sm-3 vcenter text-center _no-border-bottom">Фактическая масса</th>
+                    <th colspan="2" class="col-sm-2 vcenter text-center _no-border-bottom">Дата/Время</th>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Погрузка</th>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Разгрузка</th>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Грузоотправитель</th>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Грузополучатель</th>
+                    <th rowspan="2" class="col-sm-1 vcenter text-center">Грузоперевозчик</th>
+                </tr>
+                <tr>
+                    <th class="col-sm-1 text-center _no-border-top">Брутто</th>
+                    <th class="col-sm-1 text-center _no-border-top">Тара</th>
+                    <th class="col-sm-1 text-center _no-border-top">Нетто</th>
+                    <th class="col-sm-1 text-center _no-border-top">Брутто</th>
+                    <th class="col-sm-1 text-center _no-border-top">Тара</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="scroll-body" when-scrolled="loadMore()">
+        <table>
+            <table class="table table-hover table-striped">
+                <tbody ng-repeat="(key, items) in weights | groupBy:'date'">
+                <tr>
+                    <td colspan="12" class="group-header" class="col-sm-12">{{key | date:'dd.MM.yyyy' }}</td>
+                </tr>
+                    <tr ng-repeat="item in items | orderBy: 'dateGross'">
+                        <td class="col-sm-1 text-center vcenter cursor-pointer"><a ng-click="showAdvanced($event, item)" ng-bind="item.carNom"></a></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.cargo"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.gross | number:2"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.tare | number:2"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.netto | number:2"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.dateGross | date:'dd.MM.yyyy HH:mm:ss'"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.dateTare | date:'dd.MM.yyyy HH:mm:ss'"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.loading"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.unloading"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.sender"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.addressee"></td>
+                        <td class="col-sm-1 text-center vcenter" ng-bind="item.cargoCarrier"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </table>
+    </div>
+    <div>
+        <table class="table table-hover table-striped">
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="col-sm-2"><b class="footer-font-size">Всего за указанный период:</b></td>
+                    <td colspan="1" class="col-sm-1"><b class="footer-font-size">Брутто: {{total.gross | number:2}} т.</b></td>
+                    <td colspan="1" class="col-sm-1"><b class="footer-font-size">Тара: {{total.tare | number:2}} т.</b></td>
+                    <td colspan="1" class="col-sm-1"><b class="footer-font-size">Нетто: {{total.netto | number:2}} т.</b></td>
+                    <td colspan="7" class="col-sm-3"><b class="footer-font-size">Количество рейсов: {{ totalItems }}</b></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+
+<div class="container-fluid" ng-if="!weights && weights.length === 0">
+    <h1>Результы не найдены, попробуйте повторить поиск</h1>
+</div>
+
+<div class="pull-right">
+    <span class="authtor"> created by EvseeV Inc. &copy; 2016 ver. 0.0.7</span>
+</div>

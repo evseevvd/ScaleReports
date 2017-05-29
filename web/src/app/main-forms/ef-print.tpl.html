@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <table border="1px">
+        <thead>
+            <tr>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Гос. номер</th>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Вид груза</th>
+                <th colspan="3" class="col-sm-3 vcenter text-center">Фактическая масса</th>
+                <th colspan="2" class="col-sm-2 vcenter text-center">Дата/Время</th>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Погрузка</th>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Разгрузка</th>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Грузоотправитель</th>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Грузополучатель</th>
+                <th rowspan="2" class="col-sm-1 vcenter text-center">Грузоперевозчик</th>
+            </tr>
+            <tr>
+                <th class="col-sm-1 text-center">Брутто</th>
+                <th class="col-sm-1 text-center">Тара</th>
+                <th class="col-sm-1 text-center">Нетто</th>
+                <th class="col-sm-1 text-center">Брутто</th>
+                <th class="col-sm-1 text-center">Тара</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="(key, items) in weights | groupBy:'date'">
+            <tr>
+                <td colspan="12">{{key | date:'dd.MM.yyyy' }}</td>
+            </tr>
+            <tr ng-repeat="item in items | orderBy: 'dateGross'">
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.carNom"> </td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.cargo"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.gross | number:2"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.tare | number:2"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.netto | number:2"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.dateGross | date:'dd.MM.yyyy HH:mm:ss'"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.dateTare | date:'dd.MM.yyyy HH:mm:ss'"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.loading"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.unloading"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.sender"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.addressee"></td>
+                <td class="col-sm-1 text-center vcenter" ng-bind="item.cargoCarrier"></td>
+            </tr>
+        </tbody><!--
+        <tfoot>
+            <tr>
+                <td colspan="2" class="col-sm-2"><b class="footer-font-size">Всего за указанный период:</b></td>
+                <td colspan="1" class="col-sm-1"><b class="footer-font-size">Брутто: {{total.gross | number:2}} т.</b></td>
+                <td colspan="1" class="col-sm-1"><b class="footer-font-size">Тара: {{total.tare | number:2}} т.</b></td>
+                <td colspan="1" class="col-sm-1"><b class="footer-font-size">Нетто: {{total.netto | number:2}} т.</b></td>
+                <td colspan="7" class="col-sm-3"><b class="footer-font-size">Количество рейсов: {{ totalItems }}</b></td>
+            </tr>
+        </tfoot>-->
+    </table>
+</div>

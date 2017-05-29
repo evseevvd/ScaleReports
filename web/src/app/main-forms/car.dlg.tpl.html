@@ -1,0 +1,24 @@
+<md-dialog aria-label="Mango (Fruit)"  ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Фото {{ item.carType }}</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <span ng-repeat="img in images">
+                    <a ng-click="openShowImgBox($index)">
+                        <img src="{{img.url}}" class="img-thumbnail img-preview" alt="Картинка не найдена">
+                    </a>
+                </span>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                Закрыть
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

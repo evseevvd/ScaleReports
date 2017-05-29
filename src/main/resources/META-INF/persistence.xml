@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+  http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <persistence-unit name="cofPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>ru.top.prom.cof.model.WeightAuto</class>
+        <class>ru.top.prom.cof.model.CargoCarriers</class>
+        <class>ru.top.prom.cof.model.Cars</class>
+        <class>ru.top.prom.cof.model.Cargos</class>
+        <class>ru.top.prom.cof.model.Timeframes</class>
+        <class>ru.top.prom.cof.model.Addressees</class>
+        <class>ru.top.prom.cof.model.Loadings</class>
+        <class>ru.top.prom.cof.model.Senders</class>
+        <class>ru.top.prom.cof.model.Unloadings</class>
+
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2008Dialect"/>
+            <property name="hibernate.connection.characterEncoding" value="UTF8"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.jdbc.fetch_size" value="50"/>
+            <property name="hibernate.connection.charSet" value="UTF8"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
