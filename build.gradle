@@ -1,0 +1,73 @@
+group 'ru.top.prom'
+//version '1.0-SNAPSHOT'
+
+
+ext {
+    version_spring = "3.2.2.RELEASE"
+    version_hibernate = "3.6.3.Final"
+    version_hibernate_annotation = "3.2.0.Final"
+    version_hibernate_jpa = "1.0.1.Final"
+    version_hibernate_validator = "5.2.2.Final"
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'org.akhikhl.gretty'
+
+// JDK 7
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven{
+        url 'http://maven.vaadin.com/vaadin-addons'
+    }
+}
+
+dependencies {
+    //Common
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.3'
+
+    //Spring MVC 3.2.2
+    compile "org.springframework:spring-webmvc:${version_spring}"
+    compile "org.springframework:spring-orm:${version_spring}"
+    compile "org.springframework:spring-tx:${version_spring}"
+    compile "org.codehaus.jackson:jackson-core-asl:1.9.13"
+    compile "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
+
+    //Hibernate 3.6.3.Final
+    compile "org.hibernate:hibernate-core:${version_hibernate}"
+    compile "org.hibernate:hibernate-entitymanager:${version_hibernate}"
+    compile "org.hibernate:hibernate-commons-annotations:${version_hibernate_annotation}"
+    compile "org.hibernate:hibernate-validator:${version_hibernate_validator}"
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:${version_hibernate_jpa}"
+
+    //Local libs
+    runtime fileTree(dir: 'lib', include: '*.jar')
+}
+
+//Gretty Embedded Jetty
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.1.0'
+    }
+}
+
+// Don't use Jetty8, even it's a servlet 3.0+ container,
+// but not support non-jar WebApplicationInitializer scanning.
+// It will cause "No Spring WebApplicationInitializer types detected on classpath"
+gretty {
+    port = 8080
+    contextPath = 'cof'
+    servletContainer = 'tomcat8' //tomcat7 or tomcat8 jetty7
+}
+
+
+
