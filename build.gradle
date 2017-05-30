@@ -69,5 +69,8 @@ gretty {
     servletContainer = 'tomcat8' //tomcat7 or tomcat8 jetty7
 }
 
+task distrib() {
+
+}
 
 
