@@ -21,7 +21,6 @@ import java.util.List;
 
 /**
  * Created by Владимир on 30.06.2016.
- *
  */
 @Repository
 public class WeightAutoRepositoryImpl implements WeightRepository {
@@ -167,11 +166,18 @@ public class WeightAutoRepositoryImpl implements WeightRepository {
         float gross = 0;
         float tare = 0;
         float netto = 0;
-        for (WeightAuto weightAuto :entityManager.createQuery(weightAutoCriteriaQuery).getResultList()){
-            gross += weightAuto.getGross();
-            tare += weightAuto.getTare();
-            netto += weightAuto.getNetto();
-        };
+        for (WeightAuto weightAuto : entityManager.createQuery(weightAutoCriteriaQuery).getResultList()) {
+            if (weightAuto.getGross() != null) {
+                gross += weightAuto.getGross();
+            }
+            if (weightAuto.getTare() != null) {
+                tare += weightAuto.getTare();
+            }
+            if (weightAuto.getNetto() != null) {
+                netto += weightAuto.getNetto();
+            }
+        }
+        ;
         SearchDto response = new SearchDto();
 
         response.setItemPerPage(criteria.getItemPerPage());
